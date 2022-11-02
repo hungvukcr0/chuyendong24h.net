@@ -1,0 +1,102 @@
+<html lang="en">
+
+<head>
+    <title>Share</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+
+
+<body class="d-flex flex-column h-100">
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root">
+    <div class="col-lg-10 mx-auto p-4 py-md-5">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">Share</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container mt-5">
+                    <div class="alert alert-success d-none" role="alert"  id="alert_copy">
+                        <strong>Copied!</strong> <span id="value_copy"></span>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Link</th>
+                            <th scope="col">Share</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i=0; i < share.length; i++) { %>
+                        <tr>
+                            <th scope="row"><%= share[i].id %></th>
+                            <td>
+                                <img src="<%= share[i].img %>" width="64" height="32">
+                                <a href="<%= share[i].link_origin %>" title="<%= share[i].title %>" target="_blank">
+                                    <%= share[i].title %>
+                                </a>
+                            </td>
+                            <td><button type="button" class="btn btn-sm btn-secondary" data-link="<%= share[i].link_vercel %>" onclick="copyTextToClipboard(this);">Copy</button></td>
+                            <td><a type="button" class="btn btn-sm btn-primary" href="https://www.facebook.com/sharer/sharer.php?u=<%= share[i].link_vercel %>" target="_blank">Share</a></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+
+                    <div class="btn-group w-100" role="group">
+                        <a type="button" class="btn btn-outline-dark w-50" href="<%= previous_page_url %>"><< Previous</a>
+                        <a type="button" class="btn btn-outline-dark w-50" href="<%= next_page_url %>">Next >></a>
+                    </div>
+
+            </div>
+        </main>
+        <footer class="pt-5 my-5 text-muted border-top">Created by mrvuit</footer>
+    </div>
+</div>
+<script>
+
+    function copyTextToClipboard(e) {
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = 0;
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = e.getAttribute("data-link");
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            var alert_copy = document.getElementById('alert_copy');
+            var value_copy = document.getElementById('value_copy');
+
+            alert_copy.classList.remove('d-none');
+            value_copy.innerHTML = textArea.value;
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        document.body.removeChild(textArea);
+    }
+</script>
+</body>
+</html>
