@@ -27,7 +27,7 @@ app.get("/share/:page", (req, res) => {
     
     let api = domain_url + '/wp-json/wp/v2/posts?page=' + page;
     
-    let domain_vercel = req.protocol + '://' + req.get('host');
+    let domain_vercel = req.protocol + '://' + req.get('host') + "/";
     
     request(api, { json: true }, (err, response, result) => {
         if (err) { return console.log(err); }
@@ -37,8 +37,8 @@ app.get("/share/:page", (req, res) => {
             let blank_img = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
             
             for (let i = 0; i < result.length; i++) {
-                 let link_vercel = result[i].link;
-                // let link_vercel = result[i].link.replace(domain_url, domain_vercel);
+                
+                let link_vercel = result[i].link.replace(domain_url, domain_vercel);
                 //if(link_vercel.slice(-1) !== "/") {
                 //    link_vercel = link_vercel + "/";
                 //}
