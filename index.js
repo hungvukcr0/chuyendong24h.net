@@ -3,7 +3,7 @@ const request = require('request')
 const path = require('path')
 const app = express();
 
-const domain_url = 'https://amazing24h.com/';
+const domain_url = 'https://amazing24h.com';
 
 app.use(express.static(path.join(__dirname + '/images')));
 
@@ -27,7 +27,7 @@ app.get("/share/:page", (req, res) => {
     
     let api = domain_url + '/wp-json/wp/v2/posts?page=' + page;
     
-    let domain_vercel = req.protocol + '://' + req.get('host') + "/";
+    let domain_vercel = req.protocol + '://' + req.get('host') + "";
     
     request(api, { json: true }, (err, response, result) => {
         if (err) { return console.log(err); }
@@ -39,10 +39,7 @@ app.get("/share/:page", (req, res) => {
             for (let i = 0; i < result.length; i++) {
                 
                 let link_vercel = result[i].link.replace(domain_url, domain_vercel);
-                //if(link_vercel.slice(-1) !== "/") {
-                //    link_vercel = link_vercel + "/";
-                //}
-                
+             
                 share.push({
                     id: result[i].id,
                     title: result[i].title.rendered,
