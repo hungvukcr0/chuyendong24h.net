@@ -37,10 +37,11 @@ app.get("/share/:page", (req, res) => {
             let blank_img = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
             
             for (let i = 0; i < result.length; i++) {
-                let link_vercel = result[i].link.replace(domain_url, domain_vercel);
-                if(link_vercel.slice(-1) !== "/") {
-                    link_vercel = link_vercel + "/";
-                }
+                 let link_vercel = result[i].link;
+                // let link_vercel = result[i].link.replace(domain_url, domain_vercel);
+                //if(link_vercel.slice(-1) !== "/") {
+                //    link_vercel = link_vercel + "/";
+                //}
                 
                 share.push({
                     id: result[i].id,
