@@ -37,12 +37,17 @@ app.get("/share/:page", (req, res) => {
             let blank_img = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
             
             for (let i = 0; i < result.length; i++) {
+                let link_vercel = result[i].link.replace(domain_url, domain_vercel);
+                if(link_vercel.slice(-1) !== "/") {
+                    link_vercel = link_vercel + "/";
+                }
+                
                 share.push({
                     id: result[i].id,
                     title: result[i].title.rendered,
                     img: typeof result[i].yoast_head_json.og_image !== "undefined" ? result[i].yoast_head_json.og_image[0].url : blank_img,
                     link_origin: result[i].link,
-                    link_vercel: result[i].link.replace(domain_url, domain_vercel),
+                    link_vercel: link_vercel,
                 })
             }
     
