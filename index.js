@@ -3,7 +3,7 @@ const request = require('request')
 const path = require('path')
 const app = express();
 
-const domain_url = 'https://amazing24h.com';
+const domain_url = 'https://chuyendong24h.net';
 
 app.use(express.static(path.join(__dirname + '/images')));
 
